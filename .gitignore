@@ -1,39 +1,5 @@
 # Binaries & build artifacts
 /bin/
-/pkg/
-*.exe
-*.out
-*.test
-*.tmp.*
-
-# IDE / Editor settings
-.vscode/
-.vscode/launch.json
-.idea/
-
-# Dependency directories
-vendor/
-
-# SSH & Security keys
-*.pem
-.ssh/
-private.pem
-public.pem
-key*.json
-
-# Config & Environment files
-.env
-
-# Debugging & logs
-debug
-__debug_*
-*.log
-
-# System files
-*DS_Store*
-# Binaries & build artifacts
-/bin/
-/pkg/
 *.exe
 *.out
 *.test

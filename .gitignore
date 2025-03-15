@@ -1,15 +1,66 @@
-backend-go-common
-debug
-vendor
-.vscode/launch.json
-.idea
-.ssh
+# Binaries & build artifacts
+/bin/
+/pkg/
+*.exe
+*.out
+*.test
 *.tmp.*
-*DS_store*
-.vscode
+
+# IDE / Editor settings
+.vscode/
+.vscode/launch.json
+.idea/
+
+# Dependency directories
+vendor/
+
+# SSH & Security keys
+*.pem
+.ssh/
 private.pem
 public.pem
-.env
-__debug_*
 key*.json
-.output
+
+# Config & Environment files
+.env
+
+# Debugging & logs
+debug
+__debug_*
+*.log
+
+# System files
+*DS_Store*
+# Binaries & build artifacts
+/bin/
+/pkg/
+*.exe
+*.out
+*.test
+*.tmp.*
+
+# IDE / Editor settings
+.vscode/
+.vscode/launch.json
+.idea/
+
+# Dependency directories
+vendor/
+
+# SSH & Security keys
+*.pem
+.ssh/
+private.pem
+public.pem
+key*.json
+
+# Config & Environment files
+.env
+
+# Debugging & logs
+debug
+__debug_*
+*.log
+
+# System files
+*DS_Store*

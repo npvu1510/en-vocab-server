@@ -21,7 +21,7 @@ func NewCategoryController(service service.ICategoryService) ICategoryController
 }
 
 func (ctl *CategoryController) GetCategories(ctx *fiber.Ctx, reqData dto.ListReqData) wrapper.Response {
-	categories, err := ctl.Service.GetCategories(reqData)
+	categories, err := ctl.Service.GetCategories(ctx.Context(), reqData)
 	if err != nil {
 		return wrapper.Response{
 			Error: errors.ErrorInternalServer.Newf(err.Error()),

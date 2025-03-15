@@ -19,7 +19,8 @@ func (r *DictionaryRouter) RegisterRoutes(apiRouter fiber.Router) {
 	dictionariesRoute := apiRouter.Group("/dictionaries")
 
 	dictionariesRoute.Get("/", wrapper.Wrapper[dto.ListReqData](r.Ctl.GetDictionaries))
-	dictionariesRoute.Post("/", wrapper.Wrapper[dto.ListReqData](r.Ctl.GetDictionaries))
-	dictionariesRoute.Put("/", wrapper.Wrapper[dto.ListReqData](r.Ctl.GetDictionaries))
+
+	// dictionariesRoute2 := apiRouter.Group("/dictionaries-with-category-id")
+	// dictionariesRoute2.Get("/", wrapper.Wrapper[dto.ListReqData](r.Ctl.GetDictionariesWithCategoryId))
 
 }

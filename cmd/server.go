@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/npvu1510/en-vocab-server/internal"
 	"github.com/npvu1510/en-vocab-server/internal/controller"
 	"github.com/npvu1510/en-vocab-server/internal/repository"
@@ -41,6 +42,15 @@ func startServerCmd(
 ) {
 	app := fiber.New()
 
+	// CONFIG
+	//  CORS
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "http://localhost:3000",
+		AllowMethods: "GET",
+		AllowHeaders: "Origin, Content-Type, Accept",
+	}))
+
+	// ROUTERS
 	api := app.Group("/api")
 
 	apiV1 := api.Group("/v1")
@@ -52,5 +62,4 @@ func startServerCmd(
 	}
 
 	app.Listen(fmt.Sprintf(":%v", conf.App.Port))
-
 }

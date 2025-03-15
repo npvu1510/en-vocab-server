@@ -17,7 +17,6 @@ func NewCategoryRouter(ctl controller.ICategoryController) *CategoryRouter {
 
 func (r *CategoryRouter) RegisterRoutes(apiRouter fiber.Router) {
 	categoriesRoute := apiRouter.Group("/categories")
-
 	categoriesRoute.Get("/", wrapper.Wrapper[dto.ListReqData](r.Ctl.GetCategories))
 
 }

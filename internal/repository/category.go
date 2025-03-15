@@ -1,37 +1,31 @@
 package repository
 
 import (
+	"context"
+
 	"github.com/npvu1510/en-vocab-server/internal/dto"
 	"github.com/npvu1510/en-vocab-server/internal/model"
+	baseRepo "github.com/saoladigital/sld-go-common/repository"
 	"gorm.io/gorm"
 )
 
 type ICategoryRepo interface {
-	GetMany(reqData dto.ListReqData) ([]*model.Category, error)
+	GetMany(ctx context.Context, reqData dto.ListReqData) ([]model.Category, error)
 }
 
 type CategoryRepo struct {
-	db *gorm.DB
+	baseRepo.CURDBase[model.Category]
 }
 
 func NewCategoryRepo(db *gorm.DB) ICategoryRepo {
-	return &CategoryRepo{db: db}
+	return &CategoryRepo{CURDBase: baseRepo.NewCURDBaseImpl[model.Category](db)}
+
 }
 
-func (r *CategoryRepo) GetMany(reqData dto.ListReqData) ([]*model.Category, error) {
-	var categories []*model.Category
-
-	// PAGING
-	if reqData.Page <= 0 {
-		reqData.Page = 1
+func (c *CategoryRepo) GetMany(ctx context.Context, reqData dto.ListReqData) ([]model.Category, error) {
+	categories, err := c.CURDBase.Find(ctx)
+	if err != nil {
+		return nil, err
 	}
-
-	if reqData.Limit <= 0 {
-		reqData.Limit = 10
-	}
-	offset := (reqData.Page - 1) * reqData.Limit
-
-	err := r.db.Offset(int(offset)).Limit(int(reqData.Limit)).Find(&categories).Error
-
-	return categories, err
+	return categories, nil
 }

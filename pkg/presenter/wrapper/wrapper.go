@@ -41,11 +41,7 @@ func Wrapper[RequestDataType any](handler handlerWithReqData[RequestDataType]) f
 		}
 
 		res := handler(ctx, reqData)
-		// fmt.Printf("RESPONSE ERROR: %+v\n", res.Error)
-		// fmt.Printf("RESPONSE DATA: %+v\n", res.Data)
-
 		return FormatAPIResponse(ctx, res)
-
 	}
 }
 

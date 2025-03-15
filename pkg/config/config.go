@@ -30,6 +30,10 @@ var (
 
 func init() {
 	once.Do(func() {
+		if !utils.IsLocal() {
+			return
+		}
+
 		err := godotenv.Load(".env")
 		utils.PanicError(err)
 	})

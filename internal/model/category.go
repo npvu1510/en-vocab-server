@@ -3,7 +3,7 @@ package model
 import (
 	"fmt"
 
-	"gorm.io/gorm"
+	baseRepo "github.com/saoladigital/sld-go-common/repository"
 )
 
 type Category struct {
@@ -12,7 +12,7 @@ type Category struct {
 
 	Dictionaries []Dictionary `gorm:"many2many:dictionaries_categories"`
 
-	gorm.Model
+	baseRepo.BaseEntity
 }
 
 // Constructors
@@ -23,4 +23,8 @@ func NewCategory(id int, name string) *Category {
 // Methods
 func (c *Category) DisplayCategory() {
 	fmt.Printf("Category Id: %d\nCategory Name: %s\n", c.Id, c.Name)
+}
+
+func (c Category) TableName() string {
+	return "categories"
 }

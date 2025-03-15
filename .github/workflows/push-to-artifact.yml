@@ -27,5 +27,6 @@ jobs:
           IMAGE_NAME="asia-southeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_ARTIFACT_REPO }}/en-vocab-server"
           TAG_NAME="${GITHUB_REF#refs/tags/}"
           docker build -t "$IMAGE_NAME:$TAG_NAME" --secret id=github_token,env=GITHUB_TOKEN .
+          docker push "$IMAGE_NAME:$TAG_NAME"
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}

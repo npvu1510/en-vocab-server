@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Print context
         run: |
-          EVENT='${{toJSON(github.event)}}'
+          EVENT=`${{toJSON(github.event)}}`
           SENDER='${{toJSON(github.event.pull_request.head.user)}}'
           RECEIVER='${{toJSON(github.event.pull_request.requested_reviewers)}}'
           # echo $SENDER

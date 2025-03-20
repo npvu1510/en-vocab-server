@@ -24,8 +24,8 @@ jobs:
       - name: Send a Telegram notification
         uses: appleboy/telegram-action@master
         with:
-          token: ${{ TELEGRAM_BOT_TOKEN_ID }}
-          to: ${{ TELEGRAM_VIETTEL_CHAT_GROUP_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN_ID }}
+          to: ${{ secrets.TELEGRAM_VIETTEL_CHAT_GROUP_ID }}
           message: |
             A new commit is ready for ${{github.event.pull_request.requested_reviewers.login}} to review !
 

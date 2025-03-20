@@ -7,11 +7,10 @@ on:
       - main
 jobs:
   print:
-    if: github.event.pull_request.merged == true
+    # if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: print
         run: |
           TAG=$(git describe --tag --abbrev=0)
-          echo '${{ toJSON(github.event) }}'
           echo ${TAG}

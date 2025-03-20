@@ -10,4 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print context
-        run: echo '${{toJSON(github)}}'
+        run: |
+          SENDER=${{toJSON(github.event.pull_request.head.user)}}
+          RECEIVER=${{toJSON(github.event.pull_request.requested_reviewers)}}
+          echo "$SENDER"

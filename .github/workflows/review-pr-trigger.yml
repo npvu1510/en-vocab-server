@@ -3,7 +3,6 @@ on:
   pull_request:
     types:
       - assigned
-      - labeled
 jobs:
   print-info:
     name: Print the information about this trigger

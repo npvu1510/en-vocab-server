@@ -9,7 +9,7 @@ permissions:
   contents: write
 jobs:
   print:
-    # if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
@@ -24,7 +24,7 @@ jobs:
 
       - name: Increase version
         run: |
-          VERSION=${LATEST_TAG#v}  # Bỏ chữ 'v'
+          VERSION=${LATEST_TAG#v}
           MAJOR=$(echo $VERSION | cut -d. -f1)
           MINOR=$(echo $VERSION | cut -d. -f2)
           PATCH=$(echo $VERSION | cut -d. -f3)

@@ -20,4 +20,15 @@ jobs:
       - name: Check label name to notification
         if: github.event.action == 'labeled' && github.event.label.name == 'ready for review'
         run: echo '${{toJSON(github)}}'
-#
+
+      - name: Send a Telegram notification
+        uses: appleboy/telegram-action@master
+        with:
+          token: ${{ TELEGRAM_BOT_TOKEN_ID }}
+          to: ${{ TELEGRAM_VIETTEL_CHAT_GROUP_ID }}
+          message: |
+            A new commit is ready for ${{github.event.pull_request.requested_reviewers.login}} to review !
+
+            Repository: ${{github.repository}}
+
+            See changes: ${{github.event.pull_request._links.html.href}}/commits/${{github.workflow_sha}}

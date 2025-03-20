@@ -12,8 +12,10 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Get latest tag
         run: |
-          TAG=$(git describe --tags --abbrev=0)
+          TAG=$(git describe --tag --abbrev=0)
           echo "Latest tag: ${TAG}"

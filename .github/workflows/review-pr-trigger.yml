@@ -19,5 +19,5 @@ jobs:
           echo $EVENT
       - name: Check label name to notification
         if: github.event.action == 'labeled' && github.event.label.name == 'ready for review'
-        run: echo "Ready for review !!!!!!!!"
+        run: echo '${{toJSON(github)}}'
 #

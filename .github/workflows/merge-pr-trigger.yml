@@ -22,10 +22,23 @@ jobs:
           TAG=$(git describe --tag --abbrev=0)
           echo "LATEST_TAG=$TAG" >> $GITHUB_ENV
 
+      - name: Increase version
+        run: |
+          VERSION=${LATEST_TAG#v}  # Bỏ chữ 'v'
+          MAJOR=$(echo $VERSION | cut -d. -f1)
+          MINOR=$(echo $VERSION | cut -d. -f2)
+          PATCH=$(echo $VERSION | cut -d. -f3)
+
+          NEW_PATCH=$((PATCH + 1))
+          NEW_VERSION="v$MAJOR.$MINOR.$NEW_PATCH"
+
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+          echo "New version: $NEW_VERSION"
+
       - name: Create new tag
         run: |
           git remote set-url origin https://${{secrets.PAT}}@github.com/${{github.repository}}.git
           git remote -v
-          TAG="v2.0.1"
+          TAG=$NEW_VERSION
           git tag ${TAG}
           git push origin ${TAG}

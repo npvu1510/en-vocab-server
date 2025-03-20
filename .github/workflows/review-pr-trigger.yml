@@ -1,0 +1,62 @@
+name: Trigger telegram for pull requests are ready for review
+on:
+  pull_request:
+    types:
+      - review_requested
+      - labeled
+
+jobs:
+  notify-telegram:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set message variables
+        run: |
+          echo "REVIEWER=${{ github.event.pull_request.requested_reviewers[0].login }}" >> $GITHUB_ENV
+          echo "COMMIT_BY=${{ github.event.pull_request.head.user.login }}" >> $GITHUB_ENV
+          echo "REPO=https://github.com/${{ github.repository }}" >> $GITHUB_ENV
+          echo "CHANGES=${{ github.event.pull_request.html_url }}/commits/${{ github.workflow_sha }}" >> $GITHUB_ENV
+          echo "PULL_REQUEST=${{ github.event.pull_request.html_url }}" >> $GITHUB_ENV
+
+      - name: Map GitHub username to Telegram User ID
+        id: github_telegram_mapping
+        run: |
+          declare -A USER_MAPPING=(
+            ["pvudevil2"]="6947360844"
+            ["github_user_2"]="504164891"
+            ["github_user_3"]="123456789"
+          )
+
+          REVIEWER_GITHUB_USERNAME="${{ github.event.pull_request.requested_reviewers[0].login }}"
+          REVIEWER_TELEGRAM_ID="${USER_MAPPING[$REVIEWER_GITHUB_USERNAME]:-UNKNOWN}"
+
+          if [ "$REVIEWER_TELEGRAM_ID" == "UNKNOWN" ]; then
+            echo "Telegram of github user: $REVIEWER_GITHUB_USERNAME not found"
+            echo "TELEGRAM_ID_FOUND=false" >> $GITHUB_OUTPUT
+          else
+            echo "REVIEWER_TELEGRAM_ID=$REVIEWER_TELEGRAM_ID" >> $GITHUB_ENV
+            echo "TELEGRAM_ID_FOUND=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Check label
+        id: label_check
+        run: |
+          if [ "${{ github.event.label.name }}" == "ready for review" ]; then
+            echo "IS_READY_REVIEW_LABEL=true" >> $GITHUB_OUTPUT
+          else
+            echo "IS_READY_REVIEW_LABEL=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Send a Telegram notification
+        if: steps.label_check.outputs.IS_READY_REVIEW_LABEL == 'true' && steps.github_telegram_mapping.outputs.TELEGRAM_ID_FOUND == 'true'
+        uses: appleboy/telegram-action@master
+        with:
+          format: html
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN_ID }}
+          to: ${{ secrets.TELEGRAM_VIETTEL_CHAT_GROUP_ID }}
+          message: |
+            [✅ COMMIT is ready for review]
+            Reviewer: <a href="tg://user?id=${{env.REVIEWER_TELEGRAM_ID}}">${{ env.REVIEWER }}</a>
+            Commit by: ${{ env.COMMIT_BY }}
+            Repository: ${{ env.REPO }}
+            Pull request: ${{ env.PULL_REQUEST }}
+            See changes: ${{ env.CHANGES }}

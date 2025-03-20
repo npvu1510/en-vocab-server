@@ -1,0 +1,44 @@
+name: Create new tag when a pull request is merged into the main branch workflow
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+permissions:
+  contents: write
+jobs:
+  print:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get latest tag
+        run: |
+          TAG=$(git describe --tag --abbrev=0)
+          echo "LATEST_TAG=$TAG" >> $GITHUB_ENV
+
+      - name: Increase version
+        run: |
+          VERSION=${LATEST_TAG#v}
+          MAJOR=$(echo $VERSION | cut -d. -f1)
+          MINOR=$(echo $VERSION | cut -d. -f2)
+          PATCH=$(echo $VERSION | cut -d. -f3)
+
+          NEW_PATCH=$((PATCH + 1))
+          NEW_VERSION="v$MAJOR.$MINOR.$NEW_PATCH"
+
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+          echo "New version: $NEW_VERSION"
+
+      - name: Create new tag
+        run: |
+          git remote set-url origin https://${{secrets.PAT}}@github.com/${{github.repository}}.git
+          git remote -v
+          TAG=$NEW_VERSION
+          git tag ${TAG}
+          git push origin ${TAG}

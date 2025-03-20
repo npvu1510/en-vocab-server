@@ -17,3 +17,6 @@ jobs:
           # echo $SENDER
           # echo $RECEIVER
           echo '${EVENT}'
+        if: github.event.action == 'labeled' && github.event.label.name == 'ready for review'
+        run: echo "Ready for review !!!!!!!!"
+#

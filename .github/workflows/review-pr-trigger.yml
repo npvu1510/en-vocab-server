@@ -13,4 +13,5 @@ jobs:
         run: |
           SENDER=${{toJSON(github.event.pull_request.head.user)}}
           RECEIVER=${{toJSON(github.event.pull_request.requested_reviewers)}}
-          echo "$SENDER"
+          echo ${SENDER}
+          echo $RECEIVER

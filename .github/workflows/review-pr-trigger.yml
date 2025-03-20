@@ -1,1 +1,13 @@
 name: Trigger telegram for pull requests are ready for review
+on:
+  pull_request:
+    types:
+      - assigned
+      - labeled
+jobs:
+  print-info:
+    name: Print the information about this trigger
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print context
+        run: echo '${{toJSON(github)}}'

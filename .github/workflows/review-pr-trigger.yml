@@ -12,7 +12,7 @@ jobs:
       - name: Set message variables
         run: |
           echo "REVIEWER=${{ github.event.pull_request.requested_reviewers[0].login }}" >> $GITHUB_ENV
-          echo "AUTHOR=${{ github.event.pull_request.head.user.login }}" >> $GITHUB_ENV
+          echo "COMMIT_BY=${{ github.event.pull_request.head.user.login }}" >> $GITHUB_ENV
           echo "REPO=https://github.com/${{ github.repository }}" >> $GITHUB_ENV
           echo "CHANGES=${{ github.event.pull_request.html_url }}/commits/${{ github.workflow_sha }}" >> $GITHUB_ENV
           echo "PULL_REQUEST=${{ github.event.pull_request.html_url }}" >> $GITHUB_ENV
@@ -56,7 +56,7 @@ jobs:
           message: |
             [✅ COMMIT is ready for review]
             Reviewer: <a href="tg://user?id=${{env.REVIEWER_TELEGRAM_ID}}">${{ env.REVIEWER }}</a>
-            Commit by: ${{ env.AUTHOR }}
+            Commit by: ${{ env.COMMIT_BY }}
             Repository: ${{ env.REPO }}
             Pull request: ${{ env.PULL_REQUEST }}
             See changes: ${{ env.CHANGES }}

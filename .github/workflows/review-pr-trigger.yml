@@ -16,7 +16,7 @@ jobs:
           RECEIVER='${{toJSON(github.event.pull_request.requested_reviewers)}}'
           # echo $SENDER
           # echo $RECEIVER
-          echo $EVENT
+          echo '$EVENT'
       - name: Check label name to notification
         if: github.event.action == 'labeled' && github.event.label.name == 'ready for review'
         run: echo '${{toJSON(github)}}'

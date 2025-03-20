@@ -2,7 +2,7 @@ name: Trigger telegram for pull requests are ready for review
 on:
   pull_request:
     types:
-      - assigned
+      - review_requested
       - labeled
 jobs:
   print-info:

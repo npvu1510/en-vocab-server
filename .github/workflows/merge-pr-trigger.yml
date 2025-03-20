@@ -1,0 +1,14 @@
+name: Create new tag when a pull request is merged into the main branch workflow
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+jobs:
+  print:
+    runs-on: ubuntu-latest
+    steps:
+      - name: print
+        run: |
+          echo '${{ toJSON(github) }}'

@@ -22,8 +22,9 @@ jobs:
 
       - name: Create new tag
         run: |
+          touch ~/.gitconfig
+          git config --global url.https "//${{secrets.GITHUB_TOKEN}}@github.com/.insteadof=https://github.com/"
           git config --global --list
-          # TAG="v2.0.0"
-          # git config --global url.https "//${{secrets.PAT}}@github.com/.insteadof=https://github.com/"
-          # git tag ${TAG}
-          # git push origin ${TAG}
+          TAG="v2.0.0"
+          git tag ${TAG}
+          git push origin ${TAG}

@@ -50,6 +50,7 @@ jobs:
         if: steps.label_check.outputs.IS_READY_REVIEW_LABEL == 'true' && steps.github_telegram_mapping.outputs.TELEGRAM_ID_FOUND == 'true'
         uses: appleboy/telegram-action@master
         with:
+          format: html
           token: ${{ secrets.TELEGRAM_BOT_TOKEN_ID }}
           to: ${{ secrets.TELEGRAM_VIETTEL_CHAT_GROUP_ID }}
           message: |

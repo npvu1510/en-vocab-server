@@ -5,6 +5,8 @@ on:
       - closed
     branches:
       - main
+permissions:
+  contents: write
 jobs:
   print:
     # if: github.event.pull_request.merged == true

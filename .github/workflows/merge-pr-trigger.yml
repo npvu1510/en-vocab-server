@@ -24,8 +24,8 @@ jobs:
 
       - name: Create new tag
         run: |
-          git remote set-url origin https://x-access-token:${{secrets.PAT}}@github.com/${{github.repository}}.git
+          git remote set-url origin https://${{secrets.PAT}}@github.com/${{github.repository}}.git
           git remote -v
-          TAG="v2.0.0"
+          TAG="v2.0.1"
           git tag ${TAG}
           git push origin ${TAG}

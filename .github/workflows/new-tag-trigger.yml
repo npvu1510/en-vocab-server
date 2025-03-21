@@ -26,7 +26,7 @@ jobs:
       - name: Set Artifact Registry variables
         run: |
           echo "ARTIFACT_IMAGE_PATH=${{ secrets.GCP_REGION }}-docker.pkg.dev/${{secrets.GCP_PROJECT_ID}}/${{secrets.GCP_ARTIFACT_REPO}}/en-vocab-server" >> $GITHUB_ENV
-          echo "ARTIFACT_IMAGE_TAG" = ${{ github.ref_name }} >> $GITHUB_ENV
+          echo "ARTIFACT_IMAGE_TAG"=${{ github.ref_name }} >> $GITHUB_ENV
 
       - name: Build Docker image
         run: |

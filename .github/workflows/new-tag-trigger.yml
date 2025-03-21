@@ -18,3 +18,7 @@ jobs:
       - name: Print
         run: |
           echo '${{ toJSON(github) }}'
+
+      - name: Config docker by Google Cloud
+        run: |
+          gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev

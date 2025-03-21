@@ -1,4 +1,4 @@
-name: Trigger telegram for pull requests are ready for review
+name: Telegram notification workflow
 on:
   pull_request:
     types:

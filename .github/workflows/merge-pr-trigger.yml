@@ -1,4 +1,4 @@
-name: Create new tag when a pull request is merged into the main branch workflow
+name: New tag workflow
 on:
   pull_request:
     types:

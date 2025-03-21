@@ -27,9 +27,11 @@ jobs:
         run: |
           echo "ARTIFACT_IMAGE_PATH=${{ secrets.GCP_REGION }}-docker.pkg.dev/${{secrets.GCP_PROJECT_ID}}/${{secrets.GCP_ARTIFACT_REPO}}/en-vocab-server" >> $GITHUB_ENV
           echo "ARTIFACT_IMAGE_TAG"=${{ github.ref_name }} >> $GITHUB_ENV
-          echo "PAT=${{secrets.PAT}}" >> $GITHUB_ENV
+          # echo "PAT=${{secrets.PAT}}" >> $GITHUB_ENV
 
       - name: Build Docker image
         run: |
           DOCKER_BUILD_TAG=$ARTIFACT_IMAGE_PATH:$ARTIFACT_IMAGE_TAG
-          docker build --secret id=github_pat,env=$PAT -t $DOCKER_BUILD_TAG .
+          docker build --secret id=github_pat,env=GITHUB_PAT -t $DOCKER_BUILD_TAG .
+        env:
+          GITHUB_PAT: ${{ secrets.PAT }}

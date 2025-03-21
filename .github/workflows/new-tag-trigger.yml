@@ -1,8 +1,14 @@
-name: New tag workflow
+name: New Image workflow
+# on:
+#   push:
+#     tags:
+#       - 'v*.*.*'
 on:
-  push:
-    tags:
-      - 'v*.*.*'
+  workflow_run:
+    workflows: ['New tag workflow']
+    types:
+      - completed
+
 jobs:
   checkout:
     runs-on: ubuntu-latest

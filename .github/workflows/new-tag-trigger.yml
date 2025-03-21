@@ -39,4 +39,4 @@ jobs:
       - name: Push Docker image to Artifact Registry
         run: |
           DOCKER_BUILD_TAG=$ARTIFACT_IMAGE_PATH:$ARTIFACT_IMAGE_TAG
-          docker push DOCKER_BUILD_TAG
+          docker push $DOCKER_BUILD_TAG

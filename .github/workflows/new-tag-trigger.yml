@@ -31,5 +31,5 @@ jobs:
       - name: Build Docker image
         run: |
           DOCKER_BUILD_TAG=$ARTIFACT_IMAGE_PATH:$ARTIFACT_IMAGE_TAG
-          echo $DOCKER_BUILD_TAG
-          # docker build --secret id=github_pat,env=$secret.PAT -t
+          # echo $DOCKER_BUILD_TAG
+          docker build --secret id=github_pat,env=$secret.PAT -t $DOCKER_BUILD_TAG

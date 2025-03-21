@@ -35,3 +35,8 @@ jobs:
           docker build --secret id=github_pat,env=GITHUB_PAT -t $DOCKER_BUILD_TAG .
         env:
           GITHUB_PAT: ${{ secrets.PAT }}
+
+      - name: Push Docker image to Artifact Registry
+        run: |
+          DOCKER_BUILD_TAG=$ARTIFACT_IMAGE_PATH:$ARTIFACT_IMAGE_TAG
+          docker push DOCKER_BUILD_TAG

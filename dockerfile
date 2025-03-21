@@ -5,9 +5,8 @@ WORKDIR /app
 
 COPY go.mod go.sum ./
 
-ARG GITHUB_TOKEN
 
-RUN --mount=type=secret,id=github_token git config --global url."https://$(cat /run/secrets/github_token)@github.com/".insteadOf "https://github.com/"
+RUN --mount=type=secret,id=github_pat git config --global url."https://$(cat /run/secrets/github_pat)@github.com/".insteadOf "https://github.com/"
 RUN go mod download
 
 COPY . .

@@ -19,6 +19,17 @@ jobs:
         run: |
           echo '${{ toJSON(github) }}'
 
-      - name: Config docker by Google Cloud
+      - name: Config Docker by Google Cloud
         run: |
           gcloud auth configure-docker ${{ secrets.GCP_REGION }}-docker.pkg.dev
+
+      - name: Set Artifact Registry variables
+        run: |
+          echo "ARTIFACT_IMAGE_PATH=${{ secrets.GCP_REGION }}-docker.pkg.dev/${{secrets.GCP_PROJECT_ID}}/${{secrets.GCP_ARTIFACT_REPO}}/en-vocab-server" >> $GITHUB_ENV
+          echo "ARTIFACT_IMAGE_TAG" = ${{ github.ref_name }} >> $GITHUB_ENV
+
+      - name: Build Docker image
+        run: |
+          DOCKER_BUILD_TAG=$ARTIFACT_IMAGE_PATH:$ARTIFACT_IMAGE_TAG
+          echo $DOCKER_BUILD_TAG
+          # docker build --secret id=github_pat,env=$secret.PAT -t
